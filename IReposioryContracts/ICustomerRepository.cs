@@ -10,5 +10,6 @@ namespace SupplyChain.IServiceContracts
         Task AddAsync(Customer customer);
         Task UpdateAsync(Customer customer);
         Task DeleteAsync(int id);
+        
     }
 }

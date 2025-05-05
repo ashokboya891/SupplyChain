@@ -1,8 +1,10 @@
 ﻿using System.ComponentModel.DataAnnotations.Schema;
 using System.ComponentModel.DataAnnotations;
+using Microsoft.AspNetCore.Identity;
 
 namespace SupplyChain.Models
 {
+    //[NotMapped]
     [Table("Orders")]
     public class Orders
     {
@@ -10,9 +12,11 @@ namespace SupplyChain.Models
         [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
         public int OrderID { get; set; }
 
+
         [Required]
-        [ForeignKey("Customer")]
-        public int CustomerID { get; set; }
+        public string UserId { get; set; }  // Foreign key
+        [ForeignKey("UserId")]
+        public IdentityUser User { get; set; }  // Navigation property
 
         [Required]
         public DateTime OrderDate { get; set; } = DateTime.UtcNow;

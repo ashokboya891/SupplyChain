@@ -1,10 +1,14 @@
-﻿using Microsoft.AspNetCore.Http;
+﻿using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.Data.SqlClient;
 using Microsoft.EntityFrameworkCore;
 using SupplyChain.DatabaseContext;
+using System.Data;
 
 namespace SupplyChain.Controllers
 {
+    [Authorize(policy: "RequireAdminRole")]
     [Route("api/[controller]")]
     [ApiController]
     public class StocksController : ControllerBase
@@ -33,5 +37,29 @@ namespace SupplyChain.Controllers
 
             return Ok(requests);
         }
+        // POST api/restock/{id}/fulfill
+        [HttpPost("[action]")]
+        public async Task<IActionResult> FulfillRequest(int requestId, int quantity)
+        {
+            var cmd = _context.Database.GetDbConnection().CreateCommand();
+            cmd.CommandText = "usp_FulfillRestockRequest";
+            cmd.CommandType = CommandType.StoredProcedure;
+
+            cmd.Parameters.Add(new SqlParameter("@RequestID", requestId));
+            cmd.Parameters.Add(new SqlParameter("@ReceivedQuantity", quantity));
+
+            try
+            {
+                await cmd.Connection.OpenAsync();
+                await cmd.ExecuteNonQueryAsync();
+                return NoContent();
+            }
+            finally
+            {
+                await cmd.Connection.CloseAsync();
+            }
+        }
+
+        public record FulfillRequestDto(int Quantity);
     }
 }

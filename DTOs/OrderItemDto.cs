@@ -10,6 +10,6 @@
         public decimal TotalPrice => Quantity * UnitPrice;
 
         // Optional: Include product details
-        public string? ProductName { get; set; }
+        //public string? ProductName { get; set; }
     }
 }

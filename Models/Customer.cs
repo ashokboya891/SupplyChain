@@ -3,6 +3,7 @@ using System.ComponentModel.DataAnnotations.Schema;
 
 namespace SupplyChain.Models
 {
+    [NotMapped]
     [Table("Customers")] // Matches your table name
     public class Customer
     {

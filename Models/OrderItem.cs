@@ -3,7 +3,7 @@ using System.ComponentModel.DataAnnotations;
 
 namespace SupplyChain.Models
 {
-
+    //[NotMapped]
     [Table("OrderItems")]
     public class OrderItem
     {

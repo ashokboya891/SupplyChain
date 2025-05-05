@@ -3,6 +3,7 @@ using System.ComponentModel.DataAnnotations;
 
 namespace SupplyChain.Models
 {
+    //[NotMapped]
     [Table("RestockRequest")]
     public class RestockRequest
     {
