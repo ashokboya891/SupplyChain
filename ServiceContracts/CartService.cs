@@ -32,5 +32,11 @@ namespace SupplyChain.ServiceContracts
         {
             await _cartRepository.ClearCartAsync(userId);
         }
+
+        // Implement Update Cart Item Quantity
+        public async Task UpdateCartItemQuantityAsync(string userId, string productId, int quantity)
+        {
+            await _cartRepository.UpdateCartItemQuantityAsync(userId, productId, quantity);
+        }
     }
 }

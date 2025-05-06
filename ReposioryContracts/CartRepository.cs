@@ -55,6 +55,22 @@ namespace SupplyChain.ReposioryContracts
             string cartKey = $"cart:{userId}";
             await _redis.RemoveAsync(cartKey);
         }
+
+
+        // Implement Update Cart Item Quantity
+        public async Task UpdateCartItemQuantityAsync(string userId, string productId, int quantity)
+        {
+            string cartKey = $"cart:{userId}";
+            var cart = await GetCartAsync(userId);
+
+            var existingItem = cart.FirstOrDefault(x => x.ProductId == productId);
+            if (existingItem != null)
+            {
+                existingItem.Quantity = quantity;
+                await _redis.SetStringAsync(cartKey, JsonSerializer.Serialize(cart));
+            }
+        }
+
         //public async Task<List<CartItem>> Checkout(string userId)
         //{
         //    string cartKey = $"cart:{userId}";

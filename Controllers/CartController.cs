@@ -18,6 +18,7 @@ namespace SupplyChain.Controllers
             _cartService = cartService;
         }
 
+        // Get the cart for the user
         [HttpGet("{userId}")]
         public async Task<IActionResult> GetCart(string userId)
         {
@@ -25,6 +26,7 @@ namespace SupplyChain.Controllers
             return Ok(cart);
         }
 
+        // Add item to the cart
         [HttpPost]
         public async Task<IActionResult> AddToCart([FromBody] CartItem item)
         {
@@ -32,6 +34,7 @@ namespace SupplyChain.Controllers
             return Ok("Item added to cart");
         }
 
+        // Remove item from the cart
         [HttpDelete("{userId}/{productId}")]
         public async Task<IActionResult> RemoveFromCart(string userId, string productId)
         {
@@ -39,11 +42,20 @@ namespace SupplyChain.Controllers
             return Ok("Item removed from cart");
         }
 
+        // Clear the cart
         [HttpDelete("{userId}")]
         public async Task<IActionResult> ClearCart(string userId)
         {
             await _cartService.ClearUserCartAsync(userId);
             return Ok("Cart cleared");
+        }
+
+        // New endpoint to update cart item quantity
+        [HttpPut("{userId}/{productId}")]
+        public async Task<IActionResult> UpdateCartItemQuantity(string userId, string productId, [FromBody] int quantity)
+        {
+            await _cartService.UpdateCartItemQuantityAsync(userId, productId, quantity);
+            return Ok("Cart item quantity updated");
         }
     }
 }
