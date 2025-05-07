@@ -1,6 +1,7 @@
 ﻿using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore;
+using SupplyChain.DTOs;
 using SupplyChain.Models;
 
 namespace SupplyChain.DatabaseContext
@@ -17,6 +18,7 @@ namespace SupplyChain.DatabaseContext
         public DbSet<Orders> Orders { get; set; }
         public DbSet<OrderItem> OrderItem{ get; set; }
         public DbSet<Product> Product { get; set; }
+        //public DbSet<OrderItemProdOrderItem> OrderItems { get; set; }
 
 
 
